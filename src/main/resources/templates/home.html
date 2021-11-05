@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head"></head>
+<body style="background-color:#e9ecef;">
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to our store!</h1>
+    <p class="lead">This is the place where you will find anything you need, from your favourite cupcake or book to the
+        newest laptop.</p>
+    <hr class="my-4">
+    <p>Not convinced? Take a look through our catalog.</p>
+    <a class="btn btn-primary btn-lg" href="/products" role="button">Get started</a>
+</div>
+</body>
+</html>

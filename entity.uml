@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.javaproject.storeapp.entity</OriginalElement>
+  <nodes>
+    <node x="374.25" y="0.0">com.javaproject.storeapp.entity.ProductCategory</node>
+    <node x="301.25" y="170.0">com.javaproject.storeapp.entity.Product</node>
+    <node x="10.0" y="0.0">com.javaproject.storeapp.entity.BankAccount</node>
+    <node x="199.0" y="11.0">com.javaproject.storeapp.entity.OrderItem</node>
+    <node x="348.4813432835821" y="459.49701492537315">com.javaproject.storeapp.entity.Cart</node>
+    <node x="72.25" y="192.0">com.javaproject.storeapp.entity.Order</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="276.5" y="279.0" />
+  <SelectedNodes>
+    <node>com.javaproject.storeapp.entity.ProductCategory</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

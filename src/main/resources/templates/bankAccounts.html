@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head"></head>
+
+<body>
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+
+<div class="container marginTop centered">
+    <h1 style="font-family: 'Dancing Script', cursive;"> Your bank accounts </h1>
+    <tr th:if="${accounts.size() == 0}" style="margin-top:5rem;">
+        <h2 class="m-5 centered"><span class="badge badge-secondary">No accounts added!</span></h2>
+    </tr>
+    <table th:if="${accounts.size() != 0}" id="items" class="table table-hover marginTop"
+           style="text-align:center;vertical-align: center;">
+        <thead class="thead-dark">
+        <tr>
+            <th>Account number</th>
+            <th>Card number</th>
+            <th>Balance</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="account, stat : ${accounts}" th:id="${account.id}" class="table-light">
+
+            <td th:text="${account.accountNumber}"></td>
+
+            <td th:text="${account.cardNumber}"></td>
+
+            <td th:text="${account.balance}"></td>
+        </tr>
+        </tbody>
+
+    </table>
+    <a class="btn btn-success marginTop" href="/accounts/new">Add new account</a>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+
+</body>
+</html>

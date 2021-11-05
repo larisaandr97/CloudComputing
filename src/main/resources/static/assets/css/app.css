@@ -1,0 +1,242 @@
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+
+* {
+    font-family: 'varela round';
+}
+
+.inline {
+    display: inline-block;
+}
+
+nav {
+    background: #5fcf80;
+}
+
+nav .nav-wrapper .brand-logo {
+    left: initial;
+    -webkit-transform: none;
+    transform: none;
+    font-weight: 300;
+}
+
+.card .card-image img {
+    padding: 20px;
+}
+
+form.login button[type=submit] {
+    width: 100%;
+    padding: 10px;
+    height: initial;
+}
+
+form.login button[type=submit], form.login button[type=submit]:hover {
+    background: #117FC4;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+
+[type="checkbox"] + label::before {
+    border-color: #dad7de;
+    border-width: 1px;
+    width: 36px;
+    height: 36px;
+    transition: none;
+    -webkit-transition: none;
+}
+
+[type="checkbox"] + label {
+    font-size: 2rem;
+    line-height: 3rem;
+    height: 3rem;
+    padding-left: 46px;
+    font-weight: 200;
+    color: #555;
+}
+
+[type="checkbox"]:checked + label {
+    color: #d0d0d0;
+}
+
+[type="checkbox"]:checked + label::before {
+    top: -4px;
+    left: -7px;
+    width: 20px;
+    height: 34px;
+    border-bottom: 3px solid #5fcf80;
+    border-right: 3px solid #5fcf80;
+}
+
+.logout button {
+    border: none;
+    background: transparent;
+}
+
+.new-item label {
+    position: relative;
+    font-size: 2rem;
+    line-height: 3rem;
+    height: 3rem;
+    padding-left: 46px;
+    font-weight: 200;
+    color: #555;
+}
+
+.new-item label::before {
+    position: absolute;
+    top: -4px;
+    left: 2px;
+    display: inline-block;
+    content: 'add';
+    font-family: 'material icons';
+    width: 36px;
+    height: 36px;
+    font-size: 2rem;
+    color: rgba(131, 140, 199, 0.2);
+    direction: ltr;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.new-item input[type=text], .new-item input[type=text]:focus {
+    border: none;
+    box-shadow: none;
+    font-size: 2rem;
+    color: rgba(131, 140, 199, 1);
+}
+
+.new-item input[type=text]::-webkit-input-placeholder {
+    color: rgba(131, 140, 199, 0.4);
+}
+
+.navbar li {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.price {
+    display: inline-block;
+    float: left;
+}
+
+.addCart {
+    display: inline-block;
+    float: right;
+}
+
+.marginTop {
+    margin-top: 4rem;
+}
+
+td {
+    vertical-align: center;
+    text-align: center;
+}
+
+.centered {
+    text-align: center;
+}
+
+.quantity {
+    width: 3rem;
+}
+
+.card-img-top-custom {
+    width: 8rem !important;
+    height: 5rem;
+    object-fit: cover;
+}
+
+/*@media (min-width: 576px) {*/
+/*    .card-columns {*/
+/*        column-count: 2;*/
+/*    }*/
+/*}*/
+
+
+@media (min-width: 600px) and (max-width: 930px ) {
+    .card-columns {
+        column-count: 1;
+    }
+}
+
+@media (min-width: 930px ) and (max-width: 1294px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 1295px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+/*.bi-star-fill{*/
+/*    color: yellow;*/
+/*}*/
+.myCard {
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}
+
+/*@media (min-width: 34em) {*/
+/*    .card-columns {*/
+/*        -webkit-column-count: 1;*/
+/*        -moz-column-count: 1;*/
+/*        column-count: 1;*/
+/*    }*/
+/*}*/
+
+/*@media (min-width: 48em) {*/
+/*    .card-columns {*/
+/*        -webkit-column-count: 2;*/
+/*        -moz-column-count: 2;*/
+/*        column-count: 2;*/
+/*    }*/
+/*}*/
+
+/*@media (min-width: 62em) {*/
+/*    .card-columns {*/
+/*        -webkit-column-count: 3;*/
+/*        -moz-column-count: 3;*/
+/*        column-count: 3;*/
+/*    }*/
+/*}*/
+
+/*@media (min-width: 75em) {*/
+/*    .card-columns {*/
+/*        -webkit-column-count: 4;*/
+/*        -moz-column-count: 4;*/
+/*        column-count: 4;*/
+/*    }*/
+/*}*/
+
+.orangeButton {
+    padding: 10px 20px;
+    font-family: Poppins;
+    font-size: 1.2rem;
+    color: #fff;
+    border: 2px solid #ff9c61;
+    background-color: #ff9c61;
+    border-radius: 50px;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0px 0px 15px #ff9c61;
+    text-decoration: none;
+}
+
+.orangeButton:hover {
+    cursor: pointer;
+    background-color: transparent;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head"></head>
+<body>
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+
+<div class="container marginTop centered">
+    <h1 style="font-family: 'Dancing Script', cursive;"> Your orders </h1>
+    <tr th:if="${orders?.size() == 0}">
+        <h2 class="m-5 centered"><span class="badge badge-secondary">No orders placed!</span></h2>
+    </tr>
+    <table th:if="${orders?.size() != 0}" id="items" class="table table-hover marginTop"
+           style="text-align:center;vertical-align: center;">
+        <thead class="thead-dark">
+        <tr>
+            <th>Order ID</th>
+            <th>Date placed</th>
+            <th>Total amount</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="order, stat : ${orders}" th:id="${order.id}" class="table-light">
+
+            <td th:text="${order.id}"></td>
+
+            <td th:text="${order.datePlaced}"></td>
+
+            <td th:text="${order.totalAmount}"></td>
+
+            <td>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-dark" th:href="@{'/orders/' + ${order.id}}"><i class="bi bi-eye"></i></a>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+    <a class="btn btn-success marginTop" href="/products">Shop some more <i class="bi bi-cart-plus"></i></a>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

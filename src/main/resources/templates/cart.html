@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head"></head>
+<body>
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+<div class="container marginTop centered">
+    <h1 style="font-family: 'Dancing Script', cursive;"> Your cart </h1>
+    <table id="items" class="table table-hover marginTop" style="text-align:center;vertical-align: center;">
+        <thead class="thead-dark">
+        <tr>
+            <th>Product ID</th>
+            <th>Image</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tr th:if="${items?.size() == 0}">
+            <h2 class="m-5 centered"><span class="badge badge-secondary">No items added yet!</span></h2>
+        </tr>
+        <tr th:if="${exception != null}" th:text="${exception.message}"></tr>
+        <tbody th:if="${items?.size() != 0}">
+        <tr th:each="item, stat : ${items}" th:id="${item.product.id}" class="table-light">
+            <td th:text="${item.product.id}"></td>
+
+            <td>
+                <img th:src="@{'/products/getImage/' + ${item.product.id}}" style="width:4rem;height:auto;">
+            </td>
+
+            <td>
+                <input name="quantity" th:id="${item.product.id}" style="width:3rem;" class="quantity" type="number"
+                       min="1" th:max="${item.product.stock}" th:value="${item.quantity}"/>
+            </td>
+
+            <td th:text="${item.price}"></td>
+
+            <td th:text="${item.price * item.quantity}"></td>
+
+            <td>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-dark" th:href="@{'/products/' + ${item.product.id}}"><i class="bi bi-eye"></i></a>
+                </div>
+                <div class="btn-group" role="group">
+                    <form method="post" th:action="'/cart/delete?productId=' + ${item.product.id}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <button type="submit" class="btn btn-dark"><i class="bi bi-x-circle"></i></button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td id="totalAmount" colspan="3" style="float:right;" th:text="'Total amount: ' + ${cart?.totalAmount} ">
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <button th:if="${items?.size() != 0}" style="float:left;" id="updateCart" onclick="updateCartQuantities()"
+            class="btn btn-dark">Update cart
+    </button>
+    <br/>
+    <br/>
+
+    <form th:if="${items?.size() != 0}" method="post" action="/cart/checkout">
+        <input type="hidden" id="token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <label for="account">Payment account: </label>
+            <a th:if="${accounts?.size() == 0}" href="/accounts/new">Add an account before checkout </a>
+            <select th:if="${accounts?.size() != 0}" id="account" class="custom-select" name="accountId">
+                <option
+                        th:each="account, stat : ${accounts}" th:id="${account.id}"
+                        th:if="${account.balance >= cart.totalAmount}"
+                        th:value="${account.id}" th:text="${account.cardNumber}">
+                </option>
+                <option
+                        th:each="account, stat : ${accounts}" th:id="${account.id}"
+                        th:if="${account.balance < cart.totalAmount}" disabled
+                        th:value="${account.id}" th:text="${account.cardNumber}">
+                </option>
+            </select>
+            <br/>
+            <p>*If you cannot select an account, it means it does not have enough funds available or you do not have an
+                account added yet.</p>
+        </div>
+        <button th:if="${accounts?.size() != 0}" type="submit" class="btn btn-dark">Checkout</button>
+        <button th:if="${accounts?.size() == 0}" type="submit" class="btn btn-dark" disabled>Checkout</button>
+    </form>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+<script>
+    function updateCartQuantities() {
+        $("table > tbody > tr").each(function () {
+            let currentRow = $(this); //Do not search the whole HTML tree twice, use a subtree instead
+            let productId = currentRow.find("td:nth-child(1)").text();
+            console.log("ID:" + productId);
+            let quantity = currentRow.find("td:nth-child(3) .quantity").val();
+            console.log("quantity:" + quantity);
+            let token = $('#token').val();
+
+            $.ajax({
+                url: '/cart/update?productId=' + productId + '&quantity=' + quantity,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-Token': token
+                },
+                contentType: 'application/json',
+                success: function (result) {
+                    location.reload();
+                },
+                fail: function (result) {
+                    location.reload();
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

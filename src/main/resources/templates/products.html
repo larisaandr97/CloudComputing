@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="layout :: head"></head>
+<body>
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+<div class="container text-center">
+    <h1 style="font-family: 'Dancing Script', cursive;">Catalog</h1>
+    <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary mt-1" href="/products/new">Add new product</a>
+
+    <div class="pos-f-t marginTop">
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-light p-4">
+                <h4>Collapsed content</h4>
+                <form class="form-inline" action="/products" method="GET">
+                    <div class="form-group mb-2">
+                        <input name="name" type="text" class="form-control" placeholder="Keyword">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select id="category" class="custom-select" name="category">
+                            <option value="null">Choose category</option>
+                            <option
+                                    th:each="category:${T(com.javaproject.storeapp.entity.ProductCategory).values()}"
+                                    th:value="${category}" th:text="${category}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label class="mr-2">Price: </label>
+                        <input name="descending" class="form-check-input" type="radio" id="gridRadios2" value="true">
+                        <label class="form-check-label mr-2" for="gridRadios2">
+                            Descending
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">See results</button>
+                </form>
+            </div>
+        </div>
+        <nav class="navbar navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span> Filter products
+            </button>
+        </nav>
+    </div>
+
+    <div th:if="${productPage.content.size() == 0}" class="card-columns" style="margin-top:5rem;">
+        <h2 class="m-5 centered"><span class="badge badge-secondary">No products found!</span></h2>
+    </div>
+
+    <div class="card-columns">
+
+        <div th:each="product : ${productPage.content}" class="card bg-light mb-1 text-center"
+             style="text-align:center;margin:1rem;width:18rem;">
+
+            <img th:src="@{'/products/getImage/' + ${product.id}}" style="width:15rem;" th:alt="${product.name}">
+            <br/>
+
+            <div class="card-body">
+                <h4 class="card-title" th:text="${product.name}"></h4>
+
+                <h3 class="card-text"><span class="price badge badge-secondary"
+                                            th:text="${product.price}"></span></h3>
+                <input type="hidden" class="ratings" name="ratingProduct" th:value="${product.rating}">
+                <div class="card-text main">
+                    <i class="bi bi-star star1"></i>
+                    <i class="bi bi-star star2"></i>
+                    <i class="bi bi-star star3"></i>
+                    <i class="bi bi-star star4"></i>
+                    <i class="bi bi-star star5"></i>
+                </div>
+
+                <a class="stretched-link" th:href="'/products/' + ${product.id} "></a>
+            </div>
+            <div th:if="${product.stock !=0}" class="card-footer text-muted center"
+                 th:text="'Only ' + ${product.stock} + ' left!'">
+            </div>
+            <div th:if="${product.stock ==0}" class="card-footer text-muted center"
+                 th:text="'No items left!'">
+            </div>
+        </div>
+    </div>
+    <navbar aria-label="Page navigation example">
+        <ul class="pagination mt-3">
+            <li th:if="${productPage.totalPages > 0}" class="page-item myCard bg-light mr-1" style="min-width: 2rem;"
+                th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{/products(size=${productPage.getSize()}, page=${pageNumber})}"
+                   th:text="${pageNumber}"
+                   th:class="${pageNumber==productPage.number + 1} ? active"></a>
+            </li>
+        </ul>
+    </navbar>
+</div>
+
+<script type="text/javascript" th:src="@{/assets/js/products.js}"></script>
+</body>
+</html>

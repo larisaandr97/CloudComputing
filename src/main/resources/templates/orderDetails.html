@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout :: head"></head>
+
+<body>
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+
+<div class="container marginTop centered">
+    <h1 style="font-family: 'Dancing Script', cursive;" th:text="'Order no.' + ${order.id}"></h1>
+    <br/>
+    <h5 th:text="'Placed on: ' + ${order.datePlaced}"></h5>
+    <h5 th:text="'Paid with account: ' + ${order.account.cardNumber}"></h5>
+    <br/>
+    <table id="items" class="table table-hover marginTop" style="text-align:center;vertical-align: center;">
+        <thead class="thead-dark">
+        <tr>
+            <th>Product ID</th>
+            <th>Image</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, stat : ${items}" th:id="${item.id}" class="table-light">
+            <td th:text="${item.product.id}"></td>
+
+            <td>
+                <img th:src="@{'/products/getImage/' + ${item.product.id}}" style="width:4rem;height:auto;">
+            </td>
+
+            <td th:text="${item.quantity}">
+            </td>
+
+            <td th:text="${item.price}"></td>
+
+            <td th:text="${item.price * item.quantity}"></td>
+
+            <td>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-dark" th:href="@{'/products/' + ${item.product.id}}"><i class="bi bi-eye"></i></a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td id="totalAmount" colspan="3" style="float:right;"
+                th:text="'Total amount: ' + ${order.totalAmount} ">
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+<div th:replace="layout :: scripts"></div>
+
+</body>
+</html>

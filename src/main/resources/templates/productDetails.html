@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="layout :: head"></head>
+
+<body>
+<nav th:replace="layout :: nav"></nav>
+<div th:replace="layout :: flash"></div>
+<link rel="stylesheet" th:href="@{/assets/css/commentSection.css}"/>
+
+<div class="container marginTop centered">
+    <div class="row myCard bg-light mb-1 text-center"
+         style="text-align:center;margin:5rem;">
+        <div class="col-6 marginTop">
+            <img th:src="@{'/products/getImage/' + ${product.id}}" style="width:15rem;" th:alt="${product.name}">
+        </div>
+
+        <div class="col-6 marginTop">
+            <h3 class="card-title" th:text="${product.name}"></h3>
+
+            <h3 class="card-text"><span class="price badge badge-secondary"
+                                        th:text="${product.price}"></span></h3>
+            <h4 class="card-text" th:text="${product.description}"></h4>
+            <input type="hidden" id="ratingProduct" name="ratingProduct" th:value="${product.rating}">
+            <div class="card-text main">
+                <i class="bi bi-star" id="one1"></i>
+                <i class="bi bi-star" id="two2"></i>
+                <i class="bi bi-star" id="three3"></i>
+                <i class="bi bi-star" id="four4"></i>
+                <i class="bi bi-star" id="five5"></i>
+            </div>
+            <br/>
+            <form sec:authorize="isAuthenticated()"
+                  th:action="'/cart/add?productId=' + ${product.id} + '&quantity=1'" method="post">
+                <button th:if="${product.stock !=0}" type="submit" class="btn btn-primary" style="margin-top:4rem;">
+                    Add to cart <i class="bi bi-cart-plus"></i></button>
+                <button th:if="${product.stock ==0}" disabled type="submit" class="btn btn-primary"
+                        style="margin-top:4rem;">
+                    Add to cart <i class="bi bi-cart-plus"></i></button>
+            </form>
+            <button sec:authorize="isAnonymous()" class="btn btn-primary" data-toggle="modal"
+                    data-target="#exampleModal">Add to cart <i class="bi bi-cart-plus"></i>
+            </button>
+            <i class="bi bi-tags" style="float:right;"></i>
+            <h5 style="float:right;"
+                th:text="${product.productCategory} ">
+            </h5>
+        </div>
+        <div th:if="${product.stock !=0}" class="card-footer text-muted center" style="width:100%;"
+             th:text="'Only ' + ${product.stock} + ' left!'">
+        </div>
+        <div th:if="${product.stock ==0}" class="card-footer text-muted center" style="width:100%;"
+             th:text="'No items left!'">
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div sec:authorize="isAuthenticated()" class="col-md-10">
+
+            <form class="needs-validation" novalidate th:object="${reviewRequest}"
+                  th:action="'/reviews/' + ${product.id}" method="post">
+                <div class="d-flex flex-row align-items-center add-comment p-2 bg-white rounded">
+                    <img class="rounded-circle"
+                         src="https://shooterstv.live/wp-content/uploads/2020/10/ti-default.png"
+                         width="40">
+                    <input type="hidden" id="rating" name="rating" value="2">
+                    <input type="hidden" id="product" name="product" th:value="${product.id}">
+
+                    <input
+                            type="text" class="form-control border-0 no-box-shadow ml-1"
+                            placeholder="Leave your review here..." name="comment">
+
+                </div>
+                <div class="d-flex flex-row align-items-center add-comment p-2 bg-white rounded">
+
+                    <div class="main" style="width:100%;">
+                        <i class="bi bi-star-fill" id="one"></i>
+                        <i class="bi bi-star-fill" id="two"></i>
+                        <i class="bi bi-star" id="three"></i>
+                        <i class="bi bi-star" id="four"></i>
+                        <i class="bi bi-star" id="five"></i>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-10 centered">
+            <button sec:authorize="isAnonymous()" class="btn btn-primary" data-toggle="modal"
+                    data-target="#modalReview">Add a review
+            </button>
+        </div>
+    </div>
+
+    <div th:each="review, stat : ${reviews}" th:id="${review.id}" class="p-3 bg-light mt-2 rounded">
+        <div class="d-flex justify-content-between">
+            <div class="d-flex flex-row user">
+                <img class="rounded-circle img-fluid img-responsive"
+                     src="https://shooterstv.live/wp-content/uploads/2020/10/ti-default.png" width="40">
+                <div class="d-flex flex-column ml-2">
+                    <span class="font-weight-bold" th:text="${review.author}"></span>
+                    <span class="day" th:text="${review.dateAdded}"></span>
+                </div>
+            </div>
+            <div class="card-text main">
+                <i class="bi bi-star star1"></i>
+                <i class="bi bi-star star2"></i>
+                <i class="bi bi-star star3"></i>
+                <i class="bi bi-star star4"></i>
+                <i class="bi bi-star star5"></i>
+            </div>
+            <div class="d-flex align-items-center px-3">
+
+                <input type="hidden" id="reviewId" th:value="${review.id}">
+                <input type="hidden" class="ratings" name="ratingReview" th:value="${review.rating}">
+
+                <form sec:authorize="isAuthenticated()" th:action="'/reviews/delete/' + ${review.id}" method="post">
+                    <button type="submit" class="btn btn-dark"><i class="bi bi-trash"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="comment-text text-justify mt-2">
+            <p th:text="${review.comment}"></p>
+        </div>
+    </div>
+
+</div>
+
+
+<input type="hidden" th:value="${sameUser}" id="sameUser">
+<div th:if="${sameUser=='YES'}" class="centered">
+    <h3>
+        <span class="badge badge-secondary">Review deleted successfully</span>
+    </h3>
+</div>
+<div th:if="${sameUser=='NO'}" class="centered">
+    <h3>
+        <span class="badge badge-secondary">You cannot delete a review that does not belong to you, unless you're an admin!</span>
+    </h3>
+
+</div>
+
+<!-- Modal Cart -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Account required</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You need to login to add a product to the cart!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a type="button" href="/login" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Review -->
+<div class="modal fade" id="modalReview" tabindex="-1" role="dialog" aria-labelledby="modalReviewLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalReviewLabel">Account required</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You need to login to add a review to a product!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a type="button" href="/login" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout :: scripts"></div>
+
+<script type="text/javascript" th:src="@{/assets/js/reviews.js}"></script>
+
+<script sec:authorize="isAuthenticated()" type="text/javascript" th:src="@{/assets/js/newReview.js}"></script>
+
+</body>
+</html>

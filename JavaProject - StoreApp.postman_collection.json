@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "cd677e69-084b-4e5c-8b49-4396e7368f6c",
+		"name": "JavaProject - StoreApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Dress\",\r\n    \"description\": \"Night dress with glitter\",\r\n    \"price\" : 400,\r\n    \"productCategory\": \"CLOTHES\",\r\n    \"stock\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products?descending=false&category=FOOD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "descending",
+							"value": "false"
+						},
+						{
+							"key": "category",
+							"value": "FOOD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\" :\"Test\",\r\n    \"lastName\":\"Test\",\r\n    \"mail\":\"test@gmail.com\",\r\n    \"address\":\"adresa test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/customers/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add bank account for customer id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNumber\" : \"3331965465\",\r\n    \"balance\": 100,\r\n    \"cardNumber\" : \"4331256148952346\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/accounts/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"accounts",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all bankAccounts for customer with id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/accounts/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"accounts",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cart/add?customerId=4&productId=1&quantity=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"add"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "4"
+						},
+						{
+							"key": "productId",
+							"value": "1"
+						},
+						{
+							"key": "quantity",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cart for CustomerId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cart/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout Cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cart/checkout/4?accountId=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cart",
+						"checkout",
+						"4"
+					],
+					"query": [
+						{
+							"key": "accountId",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders for Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/orders/all/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"all",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
